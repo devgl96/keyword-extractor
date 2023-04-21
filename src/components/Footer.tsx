@@ -1,16 +1,34 @@
-import { Box, Image, Text, Flex, Link } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
+import { Box, Text, Flex, useToast } from "@chakra-ui/react";
 
-import logo from "../assets/openai.png";
 const Footer = () => {
+  const toast = useToast();
+
+  function copyLink() {
+    toast({
+      title: "Link copied!",
+      description: "Now you can share with your friends!",
+      status: "success",
+      duration: 2500,
+      isClosable: false,
+    });
+
+    navigator.clipboard.writeText("https://keywordextractor.vercel.app/");
+  }
+
   return (
     <Box marginTop={50}>
       <Flex justifyContent="center" alignItems="center">
-        <Image src={logo} marginRight={1} alt="openai logo" />
         <Text>
-          Powered by{" "}
-          <Link color="teal.200" href="https://openai.com/">
-            OpenAI
-          </Link>
+          Share with your friends!
+          <CopyIcon
+            ml={"10px"}
+            cursor="pointer"
+            _hover={{ color: "teal.200" }}
+            width={"20px"}
+            height={"20px"}
+            onClick={copyLink}
+          />
         </Text>
       </Flex>
     </Box>
