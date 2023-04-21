@@ -40,6 +40,8 @@ const TextInput = (props: TextInputProps) => {
         height={200}
         value={text}
         onChange={handleText}
+        placeholder={"Typing here ..."}
+        _placeholder={{ color: "white" }}
       />
       <Button
         bg="blue.500"
