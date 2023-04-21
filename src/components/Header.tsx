@@ -6,7 +6,7 @@ const Header = () => {
     <>
       <Image src={logo} alt="light bulb logo" width={100} marginBottom="1rem" />
       <Heading color="white" marginBottom="1rem">
-        AI Keyword Extractor
+        Keyword Extractor
       </Heading>
       <Text fontSize={25} textAlign="center">
         Paste in your text below and we'll extract the keywords for you

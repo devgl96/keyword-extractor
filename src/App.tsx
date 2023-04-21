@@ -3,6 +3,8 @@ import { Container, Box } from "@chakra-ui/react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import TextInput from "./components/TextInput";
+import KeywordsModal from "./components/KeywordModal";
+import keywordExtractor from "keyword-extractor";
 
 const App = () => {
   const [keywords, setKeywords] = useState("");
@@ -13,41 +15,22 @@ const App = () => {
     setIsLoading(true);
     setIsOpen(true);
 
-    console.log("extractKeywords env: ", import.meta.env);
+    const extractionResultData = keywordExtractor.extract(text, {
+      language: "english",
+      remove_digits: true,
+      remove_duplicates: true,
+      return_changed_case: true,
+    });
 
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "text-davinci-003",
-        prompt:
-          "Extract keywords from this text. Make the first letter of every word uppercase and separate with commas:\n\n" +
-          text +
-          "",
-        temperature: 0.5,
-        max_tokens: 60,
-        top_p: 1.0,
-        frequency_penalty: 0.8,
-        presence_penalty: 0.0,
-      }),
-    };
+    const data = extractionResultData.join(", ");
 
-    const response = await fetch(import.meta.env.VITE_OPENAI_API_URL, options);
-    const json = await response.json();
-
-    const data = json.choices[0].text.trim();
-
-    console.log("keywords: ", data);
     setKeywords(data);
     setIsLoading(false);
   }
 
-  console.log("isOpen: ", isOpen);
-  console.log("isLoading: ", isLoading);
-  console.log("keywords: ", keywords);
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <Box bg="blue.600" color="white" height="100vh" paddingTop={130}>
@@ -56,6 +39,12 @@ const App = () => {
         <TextInput extractKeywords={extractKeywords} />
         <Footer />
       </Container>
+      <KeywordsModal
+        keywords={keywords}
+        isLoading={isLoading}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </Box>
   );
 };
