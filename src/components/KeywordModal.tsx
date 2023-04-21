@@ -54,11 +54,12 @@ const KeywordsModal = (props: KeywordsModalProps) => {
 
       const arrayFromKeywords = keywords.split(",");
       const tagsToYoutube = arrayFromKeywords.map((keyword, index) => {
+        const nowKeyword = keyword.trim();
         if (index + 1 !== arrayFromKeywords.length) {
-          return `#${keyword} `;
+          return `#${nowKeyword} `;
         }
 
-        return `#${keyword}, `;
+        return `#${nowKeyword}, `;
       });
       const stringTagsToYoutube = tagsToYoutube.toString();
 
@@ -73,7 +74,11 @@ const KeywordsModal = (props: KeywordsModalProps) => {
       });
 
       const arrayFromKeywords = keywords.split(",");
-      const tagsToTwitter = arrayFromKeywords.map((keyword) => `#${keyword} `);
+      const tagsToTwitter = arrayFromKeywords.map((keyword) => {
+        const nowKeyword = keyword.trim();
+
+        return `#${nowKeyword} `;
+      });
       const stringTagsToTwitter = tagsToTwitter.toString();
 
       navigator.clipboard.writeText(stringTagsToTwitter);
