@@ -45,6 +45,10 @@ const App = () => {
     setIsLoading(false);
   }
 
+  console.log("isOpen: ", isOpen);
+  console.log("isLoading: ", isLoading);
+  console.log("keywords: ", keywords);
+
   return (
     <Box bg="blue.600" color="white" height="100vh" paddingTop={130}>
       <Container maxW="3xl" centerContent>
